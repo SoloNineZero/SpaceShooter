@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameplayKit
+import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -24,6 +25,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let alienCategory: UInt32 = 0x1 << 1
     let bullCategory: UInt32 = 0x1 << 0
+    
+    let motionManager = CMMotionManager()
+    var xAccelerate: CGFloat = 0
     
     override func didMove(to view: SKView) {
         starfield = SKEmitterNode(fileNamed: "Starfield")
@@ -57,6 +61,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             selector: #selector(addAlien),
             userInfo: nil,
             repeats: true)
+        
+        motionManager.accelerometerUpdateInterval = 0.2
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
+            if let accelerometrDate = data {
+                let acceleration = accelerometrDate.acceleration
+                self.xAccelerate = CGFloat(acceleration.x) * 0.75 + self.xAccelerate * 0.25
+            }
+        }
+    }
+    
+    override func didSimulatePhysics() {
+        player.position.x += xAccelerate * 50
+        
+        if player.position.x < -325 {
+            player.position = CGPoint(x: -325, y: player.position.y)
+        } else if player.position.x > 325 {
+            player.position = CGPoint(x: 325, y: player.position.y)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
