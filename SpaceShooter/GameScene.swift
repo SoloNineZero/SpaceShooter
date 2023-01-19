@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var gameTimer: Timer!
-    var aliens = ["alien", "alien2", "alien3"]
+    var aliens = ["alien", "alien2", "alien3", "alien4"]
     
     let alienCategory: UInt32 = 0x1 << 1
     let bullCategory: UInt32 = 0x1 << 0
@@ -74,10 +74,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didSimulatePhysics() {
         player.position.x += xAccelerate * 50
         
-        if player.position.x < -325 {
-            player.position = CGPoint(x: -325, y: player.position.y)
-        } else if player.position.x > 325 {
-            player.position = CGPoint(x: 325, y: player.position.y)
+        if player.position.x < -300 {
+            player.position = CGPoint(x: -300, y: player.position.y)
+        } else if player.position.x > 300 {
+            player.position = CGPoint(x: 300, y: player.position.y)
         }
     }
     
@@ -123,10 +123,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         aliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: aliens) as! [String]
         
         let alien = SKSpriteNode(imageNamed: aliens[0])
-        let randomPost = GKRandomDistribution(lowestValue: -350, highestValue: 350)
+        let randomPost = GKRandomDistribution(lowestValue: -300, highestValue: 300)
         let pos = CGFloat(randomPost.nextInt())
         alien.position = CGPoint(x: pos, y: 800)
-        alien.setScale(2)
+        alien.setScale(3)
         
         alien.physicsBody = SKPhysicsBody(rectangleOf: alien.size)
         alien.physicsBody?.isDynamic = true
