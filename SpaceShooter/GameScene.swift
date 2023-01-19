@@ -59,6 +59,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             repeats: true)
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        var alienBody: SKPhysicsBody
+        var bulletBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            bulletBody = contact.bodyA
+            alienBody = contact.bodyB
+        } else {
+            bulletBody = contact.bodyB
+            alienBody = contact.bodyA
+        }
+        
+        if (alienBody.categoryBitMask & alienCategory) != 0 &&
+            (bulletBody.categoryBitMask & bullCategory) != 0 {
+            collisionElements(
+                bulletNode: bulletBody.node as! SKSpriteNode,
+                alienNode: alienBody.node as! SKSpriteNode
+            )
+        }
+    }
+    
+    func collisionElements(bulletNode: SKSpriteNode, alienNode: SKSpriteNode) {
+        let explosion = SKEmitterNode(fileNamed: "Explosion")
+        explosion?.position = alienNode.position
+        self.addChild(explosion!)
+        
+        self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+        
+        bulletNode.removeFromParent()
+        alienNode.removeFromParent()
+        
+        self.run(SKAction.wait(forDuration: 2)) {
+            explosion?.removeFromParent()
+        }
+        
+        score += 5
+    }
+    
     @objc func addAlien() {
         aliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: aliens) as! [String]
         
@@ -92,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBullet() {
-        self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+        self.run(SKAction.playSoundFileNamed("torpedo.mp3", waitForCompletion: false))
         
         let bullet = SKSpriteNode(imageNamed: "torpedo")
         bullet.position = player.position
