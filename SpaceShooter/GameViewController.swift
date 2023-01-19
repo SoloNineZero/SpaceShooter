@@ -3,6 +3,7 @@
 //  SpaceShooter
 //
 //  Created by Игорь Солодянкин on 19.01.2023.
+//
 
 import UIKit
 import SpriteKit
@@ -12,6 +13,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("Hello")
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
