@@ -32,14 +32,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         starfield = SKEmitterNode(fileNamed: "Starfield")
         starfield.position = CGPoint(x: 0, y: 1472)
-        starfield.advanceSimulationTime(10)
+        starfield.advanceSimulationTime(30)
         self.addChild(starfield)
         
         starfield.zPosition = -1
         
         player = SKSpriteNode(imageNamed: "shuttle")
-        player.position = CGPoint(x: 0, y: -400) // позиция коробля
-        player.setScale(2) // размер коробля
+        player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 40) // позиция коробля
         
         self.addChild(player)
         
@@ -50,13 +49,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontName = "AmericanTypewriter-Bold"
         scoreLabel.fontSize = 36
         scoreLabel.fontColor = UIColor.white
-        scoreLabel.position = CGPoint(x: -200, y: 500)
+        scoreLabel.position = CGPoint(x: 100, y: UIScreen.main.bounds.height - 50)
         score = 0
         
         self.addChild(scoreLabel)
         
+        var timeInterval = 0.75
+        
+        if UserDefaults.standard.bool(forKey: "hard") {
+            timeInterval = 0.3
+        }
+        
         gameTimer = Timer.scheduledTimer(
-            timeInterval: 0.75,
+            timeInterval: timeInterval,
             target: self,
             selector: #selector(addAlien),
             userInfo: nil,
@@ -74,10 +79,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didSimulatePhysics() {
         player.position.x += xAccelerate * 50
         
-        if player.position.x < -300 {
-            player.position = CGPoint(x: -300, y: player.position.y)
-        } else if player.position.x > 300 {
-            player.position = CGPoint(x: 300, y: player.position.y)
+        if player.position.x < 0 {
+            player.position = CGPoint(x: UIScreen.main.bounds.width - player.size.width, y: player.position.y)
+        } else if player.position.x > UIScreen.main.bounds.width {
+            player.position = CGPoint(x: 20, y: player.position.y)
         }
     }
     
@@ -123,10 +128,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         aliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: aliens) as! [String]
         
         let alien = SKSpriteNode(imageNamed: aliens[0])
-        let randomPost = GKRandomDistribution(lowestValue: -300, highestValue: 300)
+        let randomPost = GKRandomDistribution(lowestValue: 20, highestValue: Int(UIScreen.main.bounds.size.width - 20))
         let pos = CGFloat(randomPost.nextInt())
-        alien.position = CGPoint(x: pos, y: 800)
-        alien.setScale(3)
+        alien.position = CGPoint(x: pos, y: UIScreen.main.bounds.size.height + alien.size.height)
         
         alien.physicsBody = SKPhysicsBody(rectangleOf: alien.size)
         alien.physicsBody?.isDynamic = true
@@ -141,7 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let animDuration: TimeInterval = 6
         
         var actions = [SKAction]()
-        actions.append(SKAction.move(to: CGPoint(x: pos, y: -800), duration: animDuration))
+        actions.append(SKAction.move(to: CGPoint(x: pos, y: 0 - alien.size.height), duration: animDuration))
         actions.append(SKAction.removeFromParent())
         
         alien.run(SKAction.sequence(actions))
@@ -160,7 +164,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
         bullet.physicsBody?.isDynamic = true
-        bullet.setScale(1.5) // размер выстрела
         
         bullet.physicsBody?.categoryBitMask = bullCategory
         bullet.physicsBody?.contactTestBitMask = alienCategory
@@ -173,7 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let animDuration: TimeInterval = 0.3
         
         var actions = [SKAction]()
-        actions.append(SKAction.move(to: CGPoint(x: player.position.x, y: 800), duration: animDuration))
+        actions.append(SKAction.move(to: CGPoint(x: player.position.x, y: UIScreen.main.bounds.size.height + bullet.size.height), duration: animDuration))
         actions.append(SKAction.removeFromParent())
         
         bullet.run(SKAction.sequence(actions))
