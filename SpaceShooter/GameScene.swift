@@ -39,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player = SKSpriteNode(imageNamed: "shuttle")
         player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 40) // позиция коробля
+        player.setScale(1.2)
         
         self.addChild(player)
         
@@ -47,9 +48,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         scoreLabel = SKLabelNode(text: "Счёт: 0")
         scoreLabel.fontName = "AmericanTypewriter-Bold"
-        scoreLabel.fontSize = 36
+        scoreLabel.fontSize = 30
         scoreLabel.fontColor = UIColor.white
-        scoreLabel.position = CGPoint(x: 100, y: UIScreen.main.bounds.height - 50)
+        scoreLabel.position = CGPoint(x: 100, y: UIScreen.main.bounds.height - 100)
         score = 0
         
         self.addChild(scoreLabel)
@@ -57,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var timeInterval = 0.75
         
         if UserDefaults.standard.bool(forKey: "hard") {
-            timeInterval = 0.3
+            timeInterval = 0.6
         }
         
         gameTimer = Timer.scheduledTimer(
@@ -80,9 +81,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x += xAccelerate * 50
         
         if player.position.x < 0 {
-            player.position = CGPoint(x: UIScreen.main.bounds.width - player.size.width, y: player.position.y)
+            player.position = CGPoint(x: 0, y: player.position.y)
         } else if player.position.x > UIScreen.main.bounds.width {
-            player.position = CGPoint(x: 20, y: player.position.y)
+            player.position = CGPoint(x: UIScreen.main.bounds.width, y: player.position.y)
         }
     }
     
@@ -121,7 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             explosion?.removeFromParent()
         }
         
-        score += 5
+        score += 10
     }
     
     @objc func addAlien() {
@@ -131,6 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomPost = GKRandomDistribution(lowestValue: 20, highestValue: Int(UIScreen.main.bounds.size.width - 20))
         let pos = CGFloat(randomPost.nextInt())
         alien.position = CGPoint(x: pos, y: UIScreen.main.bounds.size.height + alien.size.height)
+        alien.setScale(1.5)
         
         alien.physicsBody = SKPhysicsBody(rectangleOf: alien.size)
         alien.physicsBody?.isDynamic = true
@@ -160,10 +162,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let bullet = SKSpriteNode(imageNamed: "torpedo")
         bullet.position = player.position
-        bullet.position.y += 5
+        bullet.position.y += 15
         
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
         bullet.physicsBody?.isDynamic = true
+        bullet.setScale(1.5)
         
         bullet.physicsBody?.categoryBitMask = bullCategory
         bullet.physicsBody?.contactTestBitMask = alienCategory
