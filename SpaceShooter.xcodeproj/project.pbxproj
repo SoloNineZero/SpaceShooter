@@ -21,6 +21,7 @@
 		A85C66092979452C0093DAC3 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = A85C66072979452C0093DAC3 /* Starfield.sks */; };
 		A85C660B297AF0F10093DAC3 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = A85C660A297AF0F10093DAC3 /* MainMenu.sks */; };
 		A85C660D297AF2220093DAC3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85C660C297AF2220093DAC3 /* MainMenu.swift */; };
+		A85C6611297C152D0093DAC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A85C660F297C152D0093DAC3 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		A85C66072979452C0093DAC3 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		A85C660A297AF0F10093DAC3 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		A85C660C297AF2220093DAC3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		A85C660F297C152D0093DAC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 		A85C65DD297940550093DAC3 = {
 			isa = PBXGroup;
 			children = (
+				A85C660F297C152D0093DAC3 /* Assets.xcassets */,
 				A85C65E8297940550093DAC3 /* SpaceShooter */,
 				A85C65E7297940550093DAC3 /* Products */,
 			);
@@ -156,6 +159,7 @@
 				A85C66082979452C0093DAC3 /* Explosion.sks in Resources */,
 				A85C66092979452C0093DAC3 /* Starfield.sks in Resources */,
 				A85C65FA297940560093DAC3 /* LaunchScreen.storyboard in Resources */,
+				A85C6611297C152D0093DAC3 /* Assets.xcassets in Resources */,
 				A85C65EE297940550093DAC3 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
