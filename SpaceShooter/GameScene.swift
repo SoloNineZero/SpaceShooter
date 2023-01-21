@@ -38,8 +38,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         starfield.zPosition = -1
         
         player = SKSpriteNode(imageNamed: "shuttle")
-        player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 40) // позиция коробля
-        player.setScale(1.2)
+        
+        if UserDefaults.standard.bool(forKey: "hunter") {
+            player = SKSpriteNode(imageNamed: "shuttle")
+        } else {
+            player = SKSpriteNode(imageNamed: "shuttle2")
+        }
+        
+        player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 50) // позиция коробля
+        player.setScale(1.3)
         
         self.addChild(player)
         
@@ -48,9 +55,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         scoreLabel = SKLabelNode(text: "Счёт: 0")
         scoreLabel.fontName = "AmericanTypewriter-Bold"
-        scoreLabel.fontSize = 30
+        scoreLabel.fontSize = 24
         scoreLabel.fontColor = UIColor.white
-        scoreLabel.position = CGPoint(x: 100, y: UIScreen.main.bounds.height - 100)
+        scoreLabel.position = CGPoint(x: 70, y: UIScreen.main.bounds.height - 70)
         score = 0
         
         self.addChild(scoreLabel)
