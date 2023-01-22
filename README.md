@@ -1,5 +1,8 @@
 # SpaceShooter
 
+## Description
+
+Space Shooter game for iOS 2D using Spritekit framework and Swift. Make your way by destroying as many asteroids as you can!
 
 ## Control
 
