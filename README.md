@@ -4,8 +4,8 @@
 ## Control
 
 When using a portable device:
-Use the mouse, tilt left- or right, to control the ship
-Lasers will fire from the ship when you touch the screen and you will need to try to aim the lasers to hit the targets.
+Tilt your iPhone left or right to steer the ship
+The lasers will fire from the ship when you touch the screen and you will need to try to aim the lasers to hit the targets.
 
 ## Subjects
 
